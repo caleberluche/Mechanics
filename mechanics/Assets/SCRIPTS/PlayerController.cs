@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     {
         float forwardInput = Input.GetAxis("Vertical");
         playerRb.AddForce(focalPoint.transform.forward * speed * forwardInput);
-        powerupIndicator.transform.position = transform.position new Vector3(0, -0.5f, 0);
+        powerupIndicator.transform.position = transform.position + new Vector3(0, -0.5f, 0);
     }
 
     private void OnTriggerEntenr(Collider other)
@@ -30,18 +30,19 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("powerup"))
         {
             powerupIndicator.gameObject.SetActive(true);
-            hasPowerup= true;
+            hasPowerup = true;
             Destroy(other.gameObject);
-            StartCoroutine(PoweruCountdownRoutine();
+            StartCoroutine(PoweruCountdownRoutine());
         }
     }
-    IEnumerator PoweruCountdownRoutine();
+    IEnumerator PoweruCountdownRoutine()
     {
         yield return new WaitForSeconds(7);
         hasPowerup = false;
         powerupIndicator.gameObject.SetActive(false);
     }
-    private void OnCollisionEnter(Collision collision);
+ 
+    private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Enemy") && hasPowerup)
         {
